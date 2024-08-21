@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+       
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+         
+ 
+        {% if user.is_authenticated %}
+        
+
+
+        <!-- Formulaire de génération d'image -->
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">Générateur d'Images à partir du Texte</div>
+                        <hr>
+                        <form id="image-generator-form" method="post" action="{% url 'generate_image' %}" hx-post="{% url 'generate_image' %}" hx-target="#imageDisplay">
+                            {% csrf_token %}
+                            <!-- Champ de texte -->
+                            <div class="form-group">
+                                <label for="descriptionTexte">Entrez la description textuelle :</label>
+                                <input type="text" class="form-control" id="descriptionTexte" name="prompt" placeholder="Décrivez l'image que vous souhaitez générer">
+                            </div>
+                                             
+                            <!-- Sélecteur de style -->
+                            <div class="form-group">
+                                <label for="style">Sélectionnez le style :</label>
+                                <select class="form-control" id="style" name="style">
+                                    <option value="realiste">Réaliste</option>
+                                    <option value="abstrait">Abstrait</option>
+                                    <option value="dessinAnime">Dessin animé</option>
+                                </select>
+                            </div>
+
+                            <!-- Paramètres avancés -->
+                            <div class="form-group">
+                                <label for="resolution">Sélectionnez la résolution :</label>
+                                <select class="form-control" id="resolution" name="resolution">
+                                    <option value="256x256">Basse (256x256)</option>
+                                    <option value="512x512">Moyenne (512x512)</option>
+                                    <option value="1024x1024">Haute (1024x1024)</option>
+                                </select>
+                            </div>
+
+                            <!-- Bouton de génération -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-light px-5"><i class="icon-picture"></i> Générer l'image</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Espace pour afficher l'image générée -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">Résultat de l'image générée</div>
+                        <hr>
+                        <div id="imageDisplay" class="image-display">
+                            <img id="generatedImage" class="img-fluid" src="" alt="L'image générée apparaîtra ici">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <p class="text-danger">Vous devez être connecté pour accéder à cette fonctionnalité.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="material-icons">&#xE5CD;</i>
+                </div>				
+                <h4 class="modal-title w-100">Sorry!</h4>	
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Your credit is insufficient, please reload.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-block" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% block styles %}
+<style>
+
+
+    /* Ensure the modal text is visible */
+    #myModal .modal-content {
+        background-color: #343a40; /* Dark background for contrast */
+        color: white; /* White text */
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    #myModal .modal-confirm .icon-box {
+        color: #fff;		
+        position: absolute;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: -30px; /* Decrease the negative value to move the icon down */
+
+        width: 95px;
+        height: 95px;
+        border-radius: 50%;
+        z-index: 9;
+        background: #ef513a;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+    #myModal .modal-confirm .icon-box i {
+        font-size: 56px;
+        position: relative;
+        top: 4px;
+    }
+
+    #myModal .modal-header {
+        border-bottom: 1px solid #444; /* Slightly lighter border */
+    }
+
+    #myModal .modal-title {
+        color: white; /* White title */
+    }
+
+    #myModal .modal-body p {
+        color: white; /* White text for the body */
+    }
+
+    #myModal .icon-box {
+        background-color: #f15e5e; /* Red background for the icon */
+        color: white; /* White icon */
+        border-radius: 50%;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    #myModal .modal-footer {
+        border-top: 1px solid #444; /* Slightly lighter border */
+    }
+
+    #myModal .btn-danger {
+        background-color: #f15e5e;
+        border-color: #f15e5e;
+    }
+
+    #myModal .btn-danger:hover {
+        background-color: #dc3545; /* Darker red on hover */
+        border-color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+<script>
+    document.body.addEventListener('htmx:afterOnLoad', function(event) {
+        if (event.detail.xhr.status === 403) {
+            $('#myModal').modal('show');
+        }
+    });
+    </script>
+
+ 
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  
+  
+{% endblock %}

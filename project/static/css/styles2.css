@@ -1,0 +1,266 @@
+.frame-4 {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 63px 66px 98px 141px;
+    width: 1647px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .rectangle-1 {
+    border-radius: 75px;
+    border: 1px solid #000000;
+    background-color: #FFFFFF;
+    margin: 1px 18px 0 0;
+    width: 841px;
+    height: 82px;
+  }
+  
+  .frame-4 .write-your-prompt {
+    margin: 0 14.5px 0 0;
+    width: 370px;
+    word-break: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 100; /* Equivalent to font-thin */
+    font-size: 24px;
+    color: #000000;
+  }
+  
+  .frame-4 .rectangle-2 {
+    border-radius: 75px;
+    border: 1px solid #000000;
+    background-color: #FFFFFF;
+    margin: 0 20px 1px 0;
+    width: 388px;
+    height: 82px;
+  }
+  
+  .frame-4 .select-your-style {
+    word-break: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 100; /* Equivalent to font-thin */
+    font-size: 24px;
+    color: #000000;
+  }
+  
+  .frame-4 .rectangle-3 {
+    border-radius: 75px;
+    border: 1px solid #000000;
+    background-color: #FFFFFF;
+    margin: 1px 18px 0 0;
+    width: 841px;
+    height: 82px;
+  }
+  
+  .frame-4 .rectangle-4 {
+    border-radius: 75px;
+    border: 1px solid #000000;
+    background-color: #FFFFFF;
+    margin: 0 20px 1px 0;
+    width: 388px;
+    height: 82px;
+  }
+  
+  .frame-4 .polygon-4 {
+    width: 50px;
+    height: 49px;
+  }
+  
+  .frame-4 .union {
+    width: 49.8px;
+    height: 44.6px;
+  }
+  
+  .frame-4 .polygon-5 {
+    width: 50px;
+    height: 49px;
+  }
+  
+  .frame-4 .union-1 {
+    width: 49.8px;
+    height: 44.6px;
+  }
+  
+  .frame-4 .ellipse-1 {
+    border-radius: 31px;
+    background-color: #B7A5FF;
+    margin: 0 0 132px 0;
+    width: 62px;
+    height: 62px;
+  }
+  
+  .frame-4 .polygon-1 {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .frame-4 .rectangle-6 {
+    border-radius: 40px;
+    background-color: #D9D9D9;
+    margin: 0 79px 0 0;
+    width: 264px;
+    height: 192px;
+  }
+  
+  .frame-4 .prompt-1 {
+    margin: 0 14.5px 0 0;
+    width: 143px;
+    word-break: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 100; /* Equivalent to font-thin */
+    font-size: 24px;
+    color: #000000;
+  }
+  
+  .frame-4 .rectangle-7 {
+    border-radius: 40px;
+    background-color: #D9D9D9;
+    width: 264px;
+    height: 192px;
+  }
+  
+  .frame-4 .prompt-11 {
+    word-break: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 100; /* Equivalent to font-thin */
+    font-size: 24px;
+    color: #000000;
+  }
+  
+  .frame-4 .container {
+    margin: 2px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    width: 607px;
+    height: fit-content;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-1 {
+    border-radius: 34px;
+    background-color: #B7A5FF;
+    position: relative;
+    margin: 8px 0 7px 0;
+    display: flex;
+    padding: 9px 10px 9px 9px;
+    width: 68px;
+    height: 68px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-2 {
+    border-radius: 34px;
+    background-color: #B7A5FF;
+    position: relative;
+    margin: 8px 0 7px 0;
+    display: flex;
+    padding: 9px 10px 9px 9px;
+    width: 68px;
+    height: 68px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-3 {
+    margin: 0 82px 0 82px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: flex-start;
+    width: 437.7px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-4 {
+    margin: 0 23px 50px 0;
+    display: flex;
+    flex-direction: row;
+    width: 1417px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-5 {
+    border-radius: 34px;
+    background-color: #B7A5FF;
+    position: relative;
+    margin: 8px 14px 7px 0;
+    display: flex;
+    padding: 12.5px 9.3px 11px 8.9px;
+    width: 68px;
+    height: 68px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-6 {
+    margin: 0 20px 17px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: flex-start;
+    width: 1054.5px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-7 {
+    border-radius: 37px;
+    border: 1px solid #000000;
+    background-color: #FFFFFF;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 17px 33px 74px 22px;
+    width: 1440px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-8 {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1385px;
+    height: fit-content;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-9 {
+    position: relative;
+    margin: 0 0 16px 0;
+    display: flex;
+    width: 1385px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-10 {
+    border-radius: 34px;
+    background-color: #B7A5FF;
+    position: relative;
+    margin: 8px 14px 7px 0;
+    display: flex;
+    padding: 12.5px 9.3px 11px 8.9px;
+    width: 68px;
+    height: 68px;
+    box-sizing: border-box;
+  }
+  
+  .frame-4 .container-11 {
+    margin: 0 23px 69px 0;
+    display: flex;
+    flex-direction: row;
+    width: 1417px;
+    box-sizing: border-box;
+  }
+
+  .frame-4 .rectangle-5 {
+    box-sizing: border-box;
+    position: absolute;
+    width: 409px;
+    height: 680px;
+    left: 1219px; /* Adjust the position if needed */
+    top: 82px;    /* Adjust the position if needed */
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 37px;
+}
