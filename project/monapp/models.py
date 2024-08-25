@@ -1,4 +1,5 @@
 # monapp/models.py
+from datetime import timezone
 from django.db import models
 from django.contrib.auth.models import  User
 
@@ -42,3 +43,22 @@ class CustomerUser(models.Model):
 
     def __str__(self):
         return f"CustomerUser for {self.user.username}"
+    
+class CreditPurchaseHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.IntegerField()  # Montant des crédits achetés
+    price = models.IntegerField()  # Prix payé pour les crédits (en centimes, par exemple)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.amount} credits - {self.price} - {self.timestamp}'
+    
+
+class PromptHistory(models.Model):
+    prompt = models.ForeignKey(Prompt, on_delete=models.CASCADE, related_name='history')
+    image = models.ImageField(upload_to='generated_images/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        # Utilisation de str() pour s'assurer que les valeurs sont converties en chaînes
+        return f"History for {str(self.prompt.description)} at {str(self.created_at)}"

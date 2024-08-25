@@ -1,4 +1,5 @@
 import json
+import os
 from django.utils import timezone
 import webbrowser
 from django.conf import settings
@@ -6,7 +7,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse 
 
-from .models import Article, CustomerUser, Prompt  # Modifier cet import
+from .models import Article, CreditPurchaseHistory, CustomerUser, Prompt, PromptHistory  # Modifier cet import
 
 
 from django.contrib.auth.models import User
@@ -20,6 +21,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import requests
 from django.contrib.auth.decorators import login_required
+from django.core.files.base import ContentFile
+
 
 
 import openai
@@ -47,7 +50,7 @@ def modal(request):
 
 def load_articles(request):
     articles = Article.objects.all()
-    articles_list = list(articles.values('id', 'title', 'content'))  # Ajouter 'id' ici
+    articles_list = list(articles.values('id', 'title', 'content'))  
     return render(request,'go.html',{'articles': articles_list})
 def delete_article(request, article_id):
     print(article_id)
@@ -64,6 +67,9 @@ def indexx(request):
 def logout_view(request):
     logout(request)
     return redirect('login_view')
+def prompt_history_view(request):
+    history = PromptHistory.objects.all().order_by('-created_at')  
+    return render(request, 'prompt_history.html', {'history': history})
 
 def login_view(request):
     return render(request, 'login.html')
@@ -78,7 +84,6 @@ def signup(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        # Debugging output
         print(f"First Name: {first_name}, Email: {email}, Password: {password}")
         print(f"POST Data: {request.POST}")
 
@@ -86,15 +91,12 @@ def signup(request):
             return JsonResponse({'error': 'Missing fields'}, status=400)
 
         try:
-            # Create a new user
             user = User.objects.create_user(username=email, first_name=first_name, email=email, password=password)
 
-            # Create a CustomerUser instance
             CustomerUser.objects.create(user=user)
 
             return JsonResponse({'message': 'User created successfully!'})
         except Exception as e:
-            # Handle potential exceptions
             return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
@@ -112,7 +114,6 @@ def signin(request):
         if not all([email, password]):
             return JsonResponse({'error': 'Missing fields'}, status=400)
 
-        # Authenticate the user using email as username
         print("Before authentication")
 
         user = authenticate(request, username=email, password=password)
@@ -152,15 +153,12 @@ def generate_image(request):
             )
         url = "https://api.openai.com/v1/images/generations"
 
-        # Define the API key (replace with your actual API key)
         api_key = "sk-yZKI_14VbChcgIuAqnzupJjae2tznKYpwnmcnpsjCKT3BlbkFJHuliVIhFtoLJVS6RXaGLgaIALsbOQGcoBlHwlA4iMA"
 
-        # Define the headers
         headers = {
             "Authorization": f"Bearer {api_key}"
         }
 
-        # Define the data
         data = {
             "model": "dall-e-3",
             "prompt": prompt,  # Use the prompt from the POST request
@@ -169,7 +167,6 @@ def generate_image(request):
             
         }
 
-        # Make the API request
         response = requests.post(url, headers=headers, json=data)
       
         if response.status_code == 200:
@@ -178,32 +175,79 @@ def generate_image(request):
             image_url = result['data'][0]['url']
             print(image_url)
           
-            # Return a fragment HTML containing the image
             return HttpResponse(f'<img id="generatedImage" class="img-fluid" src="{image_url}" alt="Image générée">')
 
         else:
             print(response.json())
-            Prompt.objects.create(
-                user_id=request.user.id,  # Assurez-vous que l'utilisateur est authentifié
+            image_url = 'https://via.placeholder.com/150'
+            image_response = requests.get(image_url)
+           
+            image_name = os.path.basename(image_url)  # Nom de fichier de l'image
+            os.path.join(settings.MEDIA_ROOT, 'generated_images', image_name)
+            image_content = ContentFile(image_response.content, name=image_name)
+          
+            prompt_instance=Prompt.objects.create(
+                user_id=request.user.id,  
                 description=prompt,
-                created_at=timezone.now()  # Assurez-vous d'importer timezone
+                created_at=timezone.now()  
             )
+            prompt_history = PromptHistory(prompt=prompt_instance, image=image_content)
+            prompt_history.save()
+          
             error_message = response.json().get('error', {}).get('message', 'Unknown error')
             print(error_message)
             return JsonResponse(response.json())
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 def check_and_deduct_credits(user):
-    # Retrieve the user's profile
     try:
         profile = CustomerUser.objects.get(user=user)
     except CustomerUser.DoesNotExist:
-        return False  # If no profile exists, return False
+        return False  
 
     if profile.credits > 0:
-        # Deduct one credit
         
         
         return True
     else:
         return False
+    
+@login_required
+def add_credits(request):
+    if request.method == 'POST':
+        selected_credits = request.POST.get('selected_credits')
+        custom_credits = request.POST.get('custom_credits')
+        price = request.POST.get('price')  
+         
+        print(selected_credits)
+        print(price)
+        customer_user = CustomerUser.objects.get(user=request.user)
+
+        if selected_credits:
+            credits_to_add = int(selected_credits)
+        elif custom_credits:
+            credits_to_add = int(custom_credits)
+        else:
+            credits_to_add = 0
+
+        customer_user.credits += credits_to_add
+        customer_user.save()
+        
+        CreditPurchaseHistory.objects.create(
+            user=request.user,
+            amount=credits_to_add,
+            price=int(price)  
+        )
+
+
+        return redirect('ex')  
+@login_required
+def credit_purchase_history(request):
+        purchase_history = CreditPurchaseHistory.objects.filter(user=request.user).order_by('-timestamp')
+
+        context = {
+            'purchase_history': purchase_history
+        }
+
+        return render(request, 'history.html', context)
+    

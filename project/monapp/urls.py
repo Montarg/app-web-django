@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import base, delete_article, ex, final, generate_image, index, indexx, load_articles, login_view, logout_view, modal,register, signin, signup
+from .views import add_credits, base, credit_purchase_history, delete_article, ex, final, generate_image, index, indexx, load_articles, login_view, logout_view, modal, prompt_history_view,register, signin, signup
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -16,21 +16,24 @@ urlpatterns = [
     path('signup/', signup, name='signup'),
     
     path('indexx/', index, name='index'),
+    path('prompt-history/', prompt_history_view, name='prompt_history'),
+
 
     path('login/',login_view, name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
 
-    
+    path('add_credits/', add_credits, name='add_credits'),
     path('logout/', logout_view, name='logout'),
 
     path('ex/', ex, name='ex'),
+    path('history/', credit_purchase_history, name='credit_purchase_history'),
+
     
     path('generate_image/', generate_image, name='generate_image'),
     path('modal/', modal, name='modal'),
 
 
 
-    # Chemin pour la vue de création de l'utilisateur
 
     path('signin/', signin, name='signin'),  # Chemin pour la vue de connexion
 
