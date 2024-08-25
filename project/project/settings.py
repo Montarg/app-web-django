@@ -141,11 +141,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-OPENAI_API_KEY='sk-9Q4O11_Evyt7WcfTARl6AN9eow41HHp4Elw0MfEPNiT3BlbkFJ_e75LgOvnmauz5TbdMnfuMV_f2L_dVtt1UA5jq4wQA'
 
 LOGOUT_REDIRECT_URL = '/login/'  # Ou toute autre URL vers laquelle vous souhaitez rediriger les utilisateurs après déconnexion
 
 
-# sk-9Q4O11_Evyt7WcfTARl6AN9eow41HHp4Elw0MfEPNiT3BlbkFJ_e75LgOvnmauz5TbdMnfuMV_f2L_dVtt1UA5jq4wQA
 
 # settings.py

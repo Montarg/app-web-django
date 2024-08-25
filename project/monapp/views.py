@@ -130,7 +130,6 @@ def signin(request):
             return JsonResponse({'error': 'Invalid credentials'}, status=401)
 
 
-#openai.api_key = "sk-9Q4O11_Evyt7WcfTARl6AN9eow41HHp4Elw0MfEPNiT3BlbkFJ_e75LgOvnmauz5TbdMnfuMV_f2L_dVtt1UA5jq4wQA"
 @csrf_exempt
 def generate_image(request):
     if request.method == 'POST':
